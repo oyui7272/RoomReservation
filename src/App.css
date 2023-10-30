@@ -1,42 +1,104 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+* {
+  margin: 0px;
+  padding: 0px;
+}
+h3 {
+  font-size: 30px;
+  font-weight: bold;
+}
+.container {
+  padding: 50px 30px;
+  display: flex;
+  flex-direction: row;
+  color: #414141;
+}
+.side-bar {
+  width: 200px;
+  height: 100vh;
+}
+.side-bar p {
+  height: 95px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.side-bar p:not(#system-name) {
+  line-height: 95px;
+}
+#system-name {
+  color: #828dcf;
+}
+
+.main-content {
+  background-color: #fafbfd;
+  padding: 60px 40px;
+}
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.room-card {
+  box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: 280px;
+  margin: 20px;
+}
+.room-name {
+  height: 75px;
+  font-size: 30px;
+  line-height: 75px;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0;
+}
+.room-status-available {
+  background-color: #78a086;
+}
+.room-status-using {
+  background-color: #fcac36;
+}
+.room-status-unavailable {
+  background-color: #d85b40;
+}
+.room-status {
+  height: 165px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: #414141 solid 1px;
+}
+
+.room-status p {
+  font-size: 25px;
   text-align: center;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.room-status p span {
+  font-size: 18px;
+  display: block;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.room-schedule {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.room-schedule-ptitle {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0 20px 10px 20px;
+  display: block;
+  text-align: left;
+  width: calc(100% - 40px);
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.room-schedule-event p {
+  font-size: 20px;
+  text-align: center;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.room-schedule-event span {
+  display: block;
 }
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.no-used-today span {
+  font-size: 18px;
 }
