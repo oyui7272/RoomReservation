@@ -2,9 +2,15 @@ import React, { ReactNode } from "react";
 
 type AllListProps = {
   updateRoomCard: (roomName: string) => ReactNode;
+  nowDateTime: string;
+  updatedDateTime: string;
 };
 
-export const AllList = ({ updateRoomCard }: AllListProps) => {
+export const AllList = ({
+  updateRoomCard,
+  nowDateTime,
+  updatedDateTime,
+}: AllListProps) => {
   const F601Card = updateRoomCard("F601");
   const F602Card = updateRoomCard("F602");
   const F612Card = updateRoomCard("F612");
@@ -13,41 +19,19 @@ export const AllList = ({ updateRoomCard }: AllListProps) => {
     <>
       <h3>Today's Schedule</h3>
       <div className="cards">
-        <div className="room-card">
-          {F601Card}
-          <div className="room-schedule">
-            <p className="room-schedule-ptitle">next</p>
-            <div className="room-schedule-event">
-              <p className="no-used-today">
-                本日使用なし
-                <span>Not scheduled</span>
-                <span>to be used today</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="room-card">
-          {F602Card}
-          <div className="room-schedule">
-            <p className="room-schedule-ptitle">next</p>
-            <div className="room-schedule-event">
-              <p>
-                9:00 ~ 10:30<span>サーバ復旧作業</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="room-card">
-          {F612Card}
-          <div className="room-schedule">
-            <p className="room-schedule-ptitle">next</p>
-            <div className="room-schedule-event">
-              <p>
-                9:00 ~ 10:00<span>PDA打ち合わせ</span>
-              </p>
-            </div>
-          </div>
-        </div>
+        {F601Card}
+        {F602Card}
+        {F612Card}
+      </div>
+      <div className="time-block">
+        <p>
+          <span>現在時刻</span>
+          {nowDateTime}
+        </p>
+        <p>
+          <span>更新時刻</span>
+          {updatedDateTime}
+        </p>
       </div>
     </>
   );

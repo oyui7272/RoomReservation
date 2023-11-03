@@ -5,32 +5,62 @@
 h3 {
   font-size: 30px;
   font-weight: bold;
+  line-height: 80px;
+  height: 80px;
+  padding: 0 15px;
+  color: #828dcf;
 }
 .container {
-  padding: 50px 30px;
   display: flex;
   flex-direction: row;
   color: #414141;
+  width: 100vw;
+  font-size: 18px;
 }
 .side-bar {
-  width: 200px;
-  height: 100vh;
+  width: 220px;
+  min-height: 100vh;
 }
 .side-bar p {
-  height: 95px;
   font-size: 25px;
   font-weight: bold;
+  padding: 0 15px 0 60px;
 }
 .side-bar p:not(#system-name) {
   line-height: 95px;
 }
+
+.side-bar .active-link {
+  background-color: #828dcf;
+  color: #fff;
+  height: 95px;
+  display: block;
+  position: relative;
+}
+.side-bar .active-link::before {
+  content: "▶︎";
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  left: 30px;
+  top: calc(50% - 15px);
+}
+.side-bar .inactive-link {
+  background-color: #fff;
+  color: #414141;
+  height: 95px;
+  display: block;
+}
+
 #system-name {
   color: #828dcf;
+  padding: 25px;
 }
 
 .main-content {
-  background-color: #fafbfd;
-  padding: 60px 40px;
+  background-color: #f3f5fa;
+  padding: 30px 40px;
+  width: calc(100% - 200px);
 }
 .cards {
   display: flex;
@@ -40,8 +70,10 @@ h3 {
 .room-card {
   box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  width: 280px;
-  margin: 20px;
+  width: 30%;
+  min-width: 200px;
+  margin: 15px;
+  background-color: #fff;
 }
 .room-name {
   height: 75px;
@@ -52,53 +84,100 @@ h3 {
   font-weight: bold;
   border-radius: 10px 10px 0 0;
 }
-.room-status-available {
+.room-status-available .room-name {
   background-color: #78a086;
 }
-.room-status-using {
+.room-status-using .room-name {
   background-color: #fcac36;
 }
-.room-status-unavailable {
+.room-status-unavailable .room-name {
   background-color: #d85b40;
 }
 .room-status {
-  height: 165px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: #414141 solid 1px;
 }
-
+.room-status-available .room-status p {
+  color: #78a086;
+}
+.room-status-using .room-status p {
+  color: #fcac36;
+}
+.room-status-unavailable .room-status p {
+  color: #d85b40;
+}
 .room-status p {
   font-size: 25px;
   text-align: center;
+  font-weight: bold;
 }
 .room-status p span {
   font-size: 18px;
   display: block;
+  font-weight: bold;
 }
 .room-schedule {
-  height: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  background-color: #f3f5fa;
+  margin: 15px;
+  padding: 10px;
+  border-radius: 10px;
 }
 .room-schedule-ptitle {
   font-size: 20px;
   font-weight: bold;
-  padding: 0 20px 10px 20px;
   display: block;
-  text-align: left;
-  width: calc(100% - 40px);
+  text-align: center;
+  position: relative;
+  margin: 10px 0 30px 0;
+}
+.room-schedule-ptitle::before {
+  content: "";
+  width: 50px;
+  height: 3px;
+  position: absolute;
+  left: calc(50% - 25px);
+  bottom: -7px;
+}
+.room-status-available .room-schedule-ptitle::before {
+  background-color: #78a086;
+}
+.room-status-using .room-schedule-ptitle::before {
+  background-color: #fcac36;
+}
+.room-status-unavailable .room-schedule-ptitle::before {
+  background-color: #d85b40;
+}
+.room-schedule-event {
+  margin: 10px 0 40px 0;
+  display: flex;
+  align-items: center;
+  min-height: 95px;
 }
 .room-schedule-event p {
-  font-size: 20px;
+  font-size: 25px;
   text-align: center;
 }
 .room-schedule-event span {
   display: block;
+  font-size: 18px;
 }
 .no-used-today span {
   font-size: 18px;
+}
+.time-block {
+  background-color: #fff;
+  padding: 30px;
+  margin: 15px;
+}
+.time-block p {
+  margin: 8px;
+}
+.time-block span {
+  font-weight: bold;
+  margin-right: 20px;
 }

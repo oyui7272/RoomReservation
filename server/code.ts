@@ -1,7 +1,7 @@
 export function doGet() {
   return HtmlService.createHtmlOutputFromFile("hosting/index.html")
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
-    .setTitle("React + GAS");
+    .setTitle("Today's Schedule");
 }
 
 // 現在の部屋の状態を返す関数
@@ -34,7 +34,6 @@ export function getRoomStatus(roomName: string) {
   // ・24時間以内の予約がない or 今行われているイベントがない → 空室
   // ・今行われているイベントがあり、そのイベントの説明文に「使用中ですが、入室可能です」という言葉がある → 使用中
   // ・今行われているイベントがある → 使用不可
-
   let roomStatus = "空室";
   if (todayEvents.length != 0) {
     let todayFirstEvent = todayEvents[0];
