@@ -6,7 +6,7 @@ type AllListProps = {
   updatedDateTime: string;
 };
 
-export const AllList = ({
+export const AllRoom = ({
   updateRoomCard,
   nowDateTime,
   updatedDateTime,
