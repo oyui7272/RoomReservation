@@ -1,0 +1,37 @@
+.time-block {
+  background-color: #fff;
+  padding: 30px;
+  margin: 15px;
+}
+.time-block p {
+  margin: 8px;
+}
+.time-block span {
+  font-weight: bold;
+  margin-right: 20px;
+}
+.updatetime-div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+#reload-button {
+  color: #828dcf;
+  font-weight: bold;
+  border: #828dcf 3px solid;
+  width: 200px;
+  padding: 3px 0px;
+  text-align: center;
+  margin-left: 40px;
+  background-color: #fff;
+  font-size: 15px;
+  box-shadow: 1px 1px 5px 0px #0000004d;
+  transition: 0.2s;
+}
+#reload-button i {
+  margin-left: 10px;
+}
+#reload-button:active,
+#reload-button:hover {
+  transform: scale(0.95);
+}

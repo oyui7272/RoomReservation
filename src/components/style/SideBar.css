@@ -1,0 +1,39 @@
+.side-bar {
+  width: 220px;
+  min-height: 100vh;
+}
+.side-bar p {
+  font-size: 25px;
+  font-weight: bold;
+  padding: 0 15px 0 60px;
+}
+.side-bar p:not(#system-name) {
+  line-height: 95px;
+}
+
+.side-bar .active-link {
+  background-color: #828dcf;
+  color: #fff;
+  height: 95px;
+  display: block;
+  position: relative;
+}
+.side-bar .active-link::before {
+  content: "▶︎";
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  left: 30px;
+  top: calc(50% - 15px);
+}
+.side-bar .inactive-link {
+  background-color: #fff;
+  color: #414141;
+  height: 95px;
+  display: block;
+}
+
+#system-name {
+  color: #828dcf;
+  padding: 25px;
+}

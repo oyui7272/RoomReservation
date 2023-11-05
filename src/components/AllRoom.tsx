@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { TimeBlock } from "./TimeBlock";
 import { RoomSummaryCard } from "./RoomSummaryCard";
 import { Event } from "./EventClass";
+import "./style/AllRoom.css";
 
 type AllRoomProps = {
   nowDateTime: string;
@@ -12,6 +13,7 @@ type AllRoomProps = {
   F601TodayNextEvent: Event | null;
   F602TodayNextEvent: Event | null;
   F612TodayNextEvent: Event | null;
+  reloadNextEvent: () => Promise<void>;
 };
 
 export const AllRoom = ({
@@ -23,6 +25,7 @@ export const AllRoom = ({
   F601TodayNextEvent,
   F602TodayNextEvent,
   F612TodayNextEvent,
+  reloadNextEvent,
 }: AllRoomProps) => {
   return (
     <>
@@ -44,7 +47,11 @@ export const AllRoom = ({
           roomNextEvent={F612TodayNextEvent}
         />
       </div>
-      <TimeBlock nowDateTime={nowDateTime} updatedDateTime={updatedDateTime} />
+      <TimeBlock
+        nowDateTime={nowDateTime}
+        updatedDateTime={updatedDateTime}
+        reloadNextEvent={reloadNextEvent}
+      />
     </>
   );
 };

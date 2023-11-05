@@ -1,6 +1,7 @@
 import React from "react";
 import { RoomNextEventDiv } from "./RoomNextEventDiv";
 import { Event } from "./EventClass";
+import "./style/RoomSummaryCard.css";
 
 type RoomSummaryCardProp = {
   roomName: string;
