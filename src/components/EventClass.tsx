@@ -7,17 +7,19 @@ export class Event {
   startTime: Date | null = null;
   endTime: Date | null = null;
 
-  constructor(title: string, description: string) {
+  constructor(
+    title: string,
+    description: string,
+    startTime: Date,
+    endTime: Date
+  ) {
     this.title = title;
     this.description = description;
-  }
-
-  setStartandEndTime(startTime: Date, endTime: Date) {
     this.startTime = startTime;
     this.endTime = endTime;
   }
 
-  TODisplayTime() {
+  ToDisplayTime() {
     if (this.startTime !== null && this.endTime !== null) {
       let displayStartTime = `${this.startTime.getHours()}:${this.startTime
         .getMinutes()

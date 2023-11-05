@@ -9,9 +9,9 @@ type AllRoomProps = {
   F601Status: string;
   F602Status: string;
   F612Status: string;
-  F601NextEvent: Event | null;
-  F602NextEvent: Event | null;
-  F612NextEvent: Event | null;
+  F601TodayNextEvent: Event | null;
+  F602TodayNextEvent: Event | null;
+  F612TodayNextEvent: Event | null;
 };
 
 export const AllRoom = ({
@@ -20,9 +20,9 @@ export const AllRoom = ({
   F601Status,
   F602Status,
   F612Status,
-  F601NextEvent,
-  F602NextEvent,
-  F612NextEvent,
+  F601TodayNextEvent,
+  F602TodayNextEvent,
+  F612TodayNextEvent,
 }: AllRoomProps) => {
   return (
     <>
@@ -31,17 +31,17 @@ export const AllRoom = ({
         <RoomSummaryCard
           roomName="F601"
           roomStatus={F601Status}
-          roomNextEvent={F601NextEvent}
+          roomNextEvent={F601TodayNextEvent}
         />
         <RoomSummaryCard
           roomName="F602"
           roomStatus={F602Status}
-          roomNextEvent={F602NextEvent}
+          roomNextEvent={F602TodayNextEvent}
         />
         <RoomSummaryCard
           roomName="F612"
           roomStatus={F612Status}
-          roomNextEvent={F612NextEvent}
+          roomNextEvent={F612TodayNextEvent}
         />
       </div>
       <TimeBlock nowDateTime={nowDateTime} updatedDateTime={updatedDateTime} />

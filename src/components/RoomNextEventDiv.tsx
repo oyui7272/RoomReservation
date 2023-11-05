@@ -25,7 +25,7 @@ export const RoomNextEventDiv = ({ roomNextEvent }: RoomNextEventDivProp) => {
         <p className="room-schedule-ptitle">予約内容</p>
         <div className="room-schedule-event">
           <p>
-            {roomNextEvent.TODisplayTime()}
+            {roomNextEvent.ToDisplayTime()}
             <span>{roomNextEvent.title}</span>
           </p>
         </div>
