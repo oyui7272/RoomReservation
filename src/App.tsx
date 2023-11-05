@@ -7,45 +7,13 @@ import { AllRoom } from "./components/AllRoom";
 import { F601Detail } from "./components/F601Detail";
 import { F602Detail } from "./components/F602Detail";
 import { F612Detail } from "./components/F612Detail";
+import { Event } from "./components/EventClass";
 
 import { GASClient } from "gas-client";
 import * as server from "../server/code";
 const { serverFunctions } = new GASClient<typeof server>();
 
 function App() {
-  // 予約内容を表すクラス
-  class Event {
-    title: string = "";
-    description: string = "";
-    startTime: Date | null = null;
-    endTime: Date | null = null;
-
-    constructor(title: string, description: string) {
-      this.title = title;
-      this.description = description;
-    }
-
-    setStartandEndTime(startTime: Date, endTime: Date) {
-      this.startTime = startTime;
-      this.endTime = endTime;
-    }
-
-    TODisplayTime() {
-      if (this.startTime !== null && this.endTime !== null) {
-        let displayStartTime = `${this.startTime.getHours()}:${this.startTime
-          .getMinutes()
-          .toString()
-          .padStart(2, "0")}`;
-        let displayEndTime = `${this.endTime.getHours()}:${this.endTime
-          .getMinutes()
-          .toString()
-          .padStart(2, "0")}`;
-        return `${displayStartTime} ~ ${displayEndTime}`;
-      }
-      return "";
-    }
-  }
-
   // 部屋の状態を表す変数
   const [F601Status, setF601Status] = useState("");
   const [F602Status, setF602Status] = useState("");
@@ -70,7 +38,7 @@ function App() {
   };
 
   // 部屋の状態取得
-  async function fetchRoomStatus() {
+  async function setRoomStatus() {
     try {
       let F601Status = await serverFunctions.getRoomStatus("F601");
       let F602Status = await serverFunctions.getRoomStatus("F602");
@@ -95,7 +63,7 @@ function App() {
   }
 
   // 部屋の今日の次の予定取得
-  async function fetchNextEvent(roomName: string) {
+  async function setNextEvent(roomName: string) {
     try {
       // 予定の取得
       let {
@@ -157,114 +125,21 @@ function App() {
     }, 1000);
 
     // 1週間の予定をスプレッドシートに書き込み
-    writeWeekEvent();
-
-    // 部屋の状態取得
-    fetchRoomStatus();
-
-    // 本日の次の予定を取得
-    fetchNextEvent("F601");
-    fetchNextEvent("F602");
-    fetchNextEvent("F612");
+    const updateStatusandNextEvent = async () => {
+      try {
+        await writeWeekEvent();
+        // 部屋の状態取得
+        setRoomStatus();
+        // 本日の次の予定を取得
+        setNextEvent("F601");
+        setNextEvent("F602");
+        setNextEvent("F612");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    updateStatusandNextEvent();
   }, []);
-
-  // カード内の、本日の次の予定のHTMLコードを返すコンポーネント
-  const updateNextEvent = (roomName: string) => {
-    let nextEvent: Event | null = null;
-    if (roomName === "F601") {
-      nextEvent = F601NextEvent;
-    } else if (roomName === "F602") {
-      nextEvent = F602NextEvent;
-    } else if (roomName === "F612") {
-      nextEvent = F612NextEvent;
-    }
-    if (nextEvent === null) {
-      return (
-        <div className="room-schedule">
-          <p className="room-schedule-ptitle">予約内容</p>
-          <div className="room-schedule-event">
-            <p className="no-used-today">
-              本日の予約なし
-              <span>Not scheduled</span>
-              <span>to be used today</span>
-            </p>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="room-schedule">
-          <p className="room-schedule-ptitle">予約内容</p>
-          <div className="room-schedule-event">
-            <p>
-              {nextEvent.TODisplayTime()}
-              <span>{nextEvent.title}</span>
-            </p>
-          </div>
-        </div>
-      );
-    }
-  };
-
-  // 部屋の使用状況のCard型のHTMLコードを返すコンポーネント
-  const updateRoomCard = (roomName: string) => {
-    let roomStatus;
-    if (roomName === "F601") {
-      roomStatus = F601Status;
-    } else if (roomName === "F602") {
-      roomStatus = F602Status;
-    } else if (roomName === "F612") {
-      roomStatus = F612Status;
-    } else {
-      console.error("updateRoomCard: 引数が無効です");
-    }
-
-    let roomNextEvent = updateNextEvent(roomName);
-
-    if (roomStatus === "使用不可") {
-      return (
-        <>
-          <div className="room-card room-status-unavailable">
-            <p className="room-name">{roomName}</p>
-            <div className="room-status">
-              <p>
-                使用不可<span>In Use Not available now</span>
-              </p>
-            </div>
-            {roomNextEvent}
-          </div>
-        </>
-      );
-    } else if (roomStatus === "使用中") {
-      return (
-        <>
-          <div className="room-card room-status-using">
-            <p className="room-name">{roomName}</p>
-            <div className="room-status">
-              <p>
-                作業中<span>In Use but you can enter</span>
-              </p>
-            </div>
-            {roomNextEvent}
-          </div>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <div className="room-card room-status-available">
-            <p className="room-name">{roomName}</p>
-            <div className="room-status">
-              <p>
-                使用可能<span>available</span>
-              </p>
-            </div>
-            {roomNextEvent}
-          </div>
-        </>
-      );
-    }
-  };
 
   return (
     <>
@@ -279,9 +154,14 @@ function App() {
               path={`/*`}
               element={
                 <AllRoom
-                  updateRoomCard={updateRoomCard}
                   nowDateTime={dateTimeToString(nowDateTime)}
                   updatedDateTime={dateTimeToString(updatedDateTime)}
+                  F601Status={F601Status}
+                  F602Status={F602Status}
+                  F612Status={F612Status}
+                  F601NextEvent={F601NextEvent}
+                  F602NextEvent={F602NextEvent}
+                  F612NextEvent={F612NextEvent}
                 />
               }
             />
