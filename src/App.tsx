@@ -4,9 +4,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { SideBar } from "./components/SideBar";
 import { AllRoom } from "./components/AllRoom";
-import { F601Detail } from "./components/F601Detail";
-import { F602Detail } from "./components/F602Detail";
-import { F612Detail } from "./components/F612Detail";
+import { RoomDashboard } from "./components/RoomDashboard";
 import { Event } from "./components/EventClass";
 
 import { GASClient } from "gas-client";
@@ -206,9 +204,45 @@ function App() {
         <SideBar />
         <div className="main-content">
           <Routes>
-            <Route path={`/f601Detail`} element={<F601Detail />} />
-            <Route path={`/f602Detail`} element={<F602Detail />} />
-            <Route path={`/f612Detail`} element={<F612Detail />} />
+            <Route
+              path={`/f601Dashboard`}
+              element={
+                <RoomDashboard
+                  roomName="F601"
+                  nowDateTime={dateTimeToString(nowDateTime)}
+                  updatedDateTime={dateTimeToString(updatedDateTime)}
+                  roomStatus={F601Status}
+                  roomTodayNextEvent={F601TodayNextEvent}
+                  reloadNextEvent={reloadNextEvent}
+                />
+              }
+            />
+            <Route
+              path={`/f602Dashboard`}
+              element={
+                <RoomDashboard
+                  roomName="F602"
+                  nowDateTime={dateTimeToString(nowDateTime)}
+                  updatedDateTime={dateTimeToString(updatedDateTime)}
+                  roomStatus={F602Status}
+                  roomTodayNextEvent={F602TodayNextEvent}
+                  reloadNextEvent={reloadNextEvent}
+                />
+              }
+            />
+            <Route
+              path={`/f612Dashboard`}
+              element={
+                <RoomDashboard
+                  roomName="F612"
+                  nowDateTime={dateTimeToString(nowDateTime)}
+                  updatedDateTime={dateTimeToString(updatedDateTime)}
+                  roomStatus={F612Status}
+                  roomTodayNextEvent={F612TodayNextEvent}
+                  reloadNextEvent={reloadNextEvent}
+                />
+              }
+            />
             <Route
               path={`/*`}
               element={

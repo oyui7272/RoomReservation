@@ -16,7 +16,7 @@ export const SideBar = () => {
         <p>All room</p>
       </NavLink>
       <NavLink
-        to={`/f601Detail`}
+        to={`/f601Dashboard`}
         className={({ isActive }) =>
           isActive ? "active-link" : "inactive-link"
         }
@@ -24,7 +24,7 @@ export const SideBar = () => {
         <p>F601</p>
       </NavLink>
       <NavLink
-        to={`/f602Detail`}
+        to={`/f602Dashboard`}
         className={({ isActive }) =>
           isActive ? "active-link" : "inactive-link"
         }
@@ -32,7 +32,7 @@ export const SideBar = () => {
         <p>F602</p>
       </NavLink>
       <NavLink
-        to={`/f612Detail`}
+        to={`/f612Dashboard`}
         className={({ isActive }) =>
           isActive ? "active-link" : "inactive-link"
         }

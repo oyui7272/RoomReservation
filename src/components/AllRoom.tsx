@@ -35,16 +35,19 @@ export const AllRoom = ({
           roomName="F601"
           roomStatus={F601Status}
           roomNextEvent={F601TodayNextEvent}
+          roomNameDisplay={true}
         />
         <RoomSummaryCard
           roomName="F602"
           roomStatus={F602Status}
           roomNextEvent={F602TodayNextEvent}
+          roomNameDisplay={true}
         />
         <RoomSummaryCard
           roomName="F612"
           roomStatus={F612Status}
           roomNextEvent={F612TodayNextEvent}
+          roomNameDisplay={true}
         />
       </div>
       <TimeBlock

@@ -1,0 +1,17 @@
+.room-dashboard {
+  display: flex;
+  flex-direction: row;
+}
+
+.roomWeekSchedule {
+  background-color: #fff;
+  min-width: 350px;
+  width: 40%;
+  margin: 15px 30px;
+  padding: 20px 30px;
+}
+
+.roomWeekSchedule h4 {
+  font-weight: bold;
+  font-size: 25px;
+}

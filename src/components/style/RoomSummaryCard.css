@@ -1,3 +1,4 @@
+/* 全体の一覧画面のCSS */
 .room-card {
   box-shadow: 1px 1px 5px 0px #0000004d;
   border-radius: 10px;
@@ -5,6 +6,7 @@
   min-width: 200px;
   margin: 15px;
   background-color: #fff;
+  overflow: auto;
 }
 .room-name {
   height: 75px;
@@ -30,13 +32,13 @@
   justify-content: center;
   align-items: center;
 }
-.room-status-available .room-status p {
+.room-status-available .room-status {
   color: #78a086;
 }
-.room-status-using .room-status p {
+.room-status-using .room-status {
   color: #fcac36;
 }
-.room-status-unavailable .room-status p {
+.room-status-unavailable .room-status {
   color: #d85b40;
 }
 .room-status p {
@@ -99,4 +101,27 @@
 }
 .no-used-today span {
   font-size: 18px;
+}
+
+/* 部屋の詳細画面のCSS */
+.room-dashboard .room-card {
+  width: calc(100% - 30px);
+  min-width: 350px;
+}
+.room-dashboard .room-status {
+  height: 195px;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+}
+.room-dashboard .room-status-available .room-status {
+  background-color: #78a086;
+}
+.room-dashboard .room-status-using .room-status {
+  background-color: #fcac36;
+}
+.room-dashboard .room-status-unavailable .room-status {
+  background-color: #d85b40;
+}
+.room-dashboard .room-schedule {
+  background-color: #fff;
 }

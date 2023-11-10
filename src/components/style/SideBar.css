@@ -1,5 +1,5 @@
 .side-bar {
-  width: 220px;
+  min-width: 220px;
   min-height: 100vh;
 }
 .side-bar p {

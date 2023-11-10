@@ -9,7 +9,7 @@ export const RoomNextEventDiv = ({ roomNextEvent }: RoomNextEventDivProp) => {
   if (roomNextEvent === null) {
     return (
       <div className="room-schedule">
-        <p className="room-schedule-ptitle">予約内容</p>
+        <p className="room-schedule-ptitle">次の予約</p>
         <div className="room-schedule-event">
           <p className="no-used-today">
             本日の予約なし
