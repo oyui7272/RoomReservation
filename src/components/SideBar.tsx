@@ -13,7 +13,7 @@ export const SideBar = () => {
           isActive ? "active-link" : "inactive-link"
         }
       >
-        <p>All room</p>
+        <p>All Room</p>
       </NavLink>
       <NavLink
         to={`/f601Dashboard`}

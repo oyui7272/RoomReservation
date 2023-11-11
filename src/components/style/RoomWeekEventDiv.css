@@ -1,0 +1,34 @@
+.eventElement {
+  background-color: #f3f5fa;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 15px 0px 15px 20px;
+  border-radius: 10px;
+  padding: 15px;
+  position: relative;
+}
+.eventElement::before {
+  content: "";
+  width: 20px;
+  height: 100%;
+  position: absolute;
+  left: -15px;
+  border-radius: 10px 0 0 10px;
+}
+.event-status-unavailable::before {
+  background-color: #e9a495;
+}
+.event-status-using::before {
+  background-color: #fdd59a;
+}
+.eventDescription {
+  margin-left: 50px;
+}
+.eventTime p {
+  margin: 3px 0;
+}
+.event-end-mark {
+  margin: 15px 0;
+  text-align: center;
+}

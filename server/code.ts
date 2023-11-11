@@ -1,7 +1,7 @@
 export function doGet() {
   return HtmlService.createHtmlOutputFromFile("hosting/index.html")
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
-    .setTitle("Today's Schedule");
+    .setTitle("自由部屋 予約システム");
 }
 
 // 1週間の予約内容を確認する関数
@@ -26,6 +26,7 @@ export function writeWeekEvent(roomName: string) {
   let startDate = new Date();
   let endDate = new Date();
   endDate.setDate(startDate.getDate() + 7);
+  endDate.setHours(23, 59, 59);
 
   // 1週間の予定を取得して、SpreadSheetに書き込む
   let weekEvents = roomCalendar.getEvents(startDate, endDate);
@@ -41,7 +42,7 @@ export function writeWeekEvent(roomName: string) {
   let lastRow = roomSheet.getLastRow();
 
   // 内容を削除→更新
-  roomSheet.getRange(2, 1, lastRow, 3).clearContent();
+  roomSheet.getRange(2, 1, lastRow, 4).clearContent();
   weekEvents.forEach((event) => {
     let set_startTime = Utilities.formatDate(
       event.getStartTime(),
@@ -88,72 +89,6 @@ export function getNextEvent(roomName: string): {
   };
 }
 
-// 現在の部屋の状態を返す関数
-// 引数：roonName("F601", "F602", "F612"のいずれか)
-// export function getRoomStatus(roomName: string) {
-//   let roomSheet =
-//     SpreadsheetApp.getActiveSpreadsheet().getSheetByName(roomName);
-
-//   let {
-//     nextEvent_startTime,
-//     nextEvent_endTime,
-//     nextEvent_title,
-//     nextEvent_description,
-//   } = getNextEvent(roomName);
-
-//   // roomStatus: 現在の部屋の状態を返す変数（空室、使用中、使用不可）
-//   // スプレッドシートの状態を更新
-//   // ■ 判断方法（直近のイベントの開始時刻を見る）
-//   // ・今行われているイベントがない → 空室
-//   // ・今行われているイベントがあり、そのイベントの説明文に「入室可能」という言葉がある → 使用中
-//   // ・今行われているイベントがある → 使用不可
-
-//   let nowDate = new Date();
-//   let roomStatus = "空室";
-
-//   if (nextEvent_startTime !== "" && nextEvent_endTime !== "") {
-//     let eventStartDate = Utilities.parseDate(
-//       nextEvent_startTime,
-//       "JST",
-//       "yyyy/MM/dd HH:mm:ss"
-//     );
-//     let eventEndDate = Utilities.parseDate(
-//       nextEvent_endTime,
-//       "JST",
-//       "yyyy/MM/dd HH:mm:ss"
-//     );
-
-//     let diff1_ms = nowDate.getTime() - eventStartDate.getTime();
-//     let diff2_ms = eventEndDate.getTime() - nowDate.getTime();
-//     if (diff1_ms > 0 && diff2_ms > 0) {
-//       roomStatus = "使用不可";
-//       if (nextEvent_description.includes("入室可能")) {
-//         roomStatus = "使用中";
-//       }
-//     }
-//   }
-
-//   let statusSheet =
-//     SpreadsheetApp.getActiveSpreadsheet().getSheetByName("現在の状態");
-//   if (statusSheet === null) {
-//     console.error("getWeekEvent: シートが存在しません");
-//   } else {
-//     let targetRow = 5;
-//     if (roomName === "F601") {
-//       targetRow = 2;
-//     } else if (roomName === "F602") {
-//       targetRow = 3;
-//     } else if (roomName === "F612") {
-//       targetRow = 4;
-//     }
-//     if (targetRow <= 4) {
-//       // 内容を更新
-//       statusSheet?.getRange(targetRow, 2).setValue(roomStatus);
-//     }
-//   }
-//   return roomStatus;
-// }
-
 export function writeRoomStatus(roomName: string, roomStatus: string) {
   let statusSheet =
     SpreadsheetApp.getActiveSpreadsheet().getSheetByName("現在の状態");
@@ -173,4 +108,26 @@ export function writeRoomStatus(roomName: string, roomStatus: string) {
       statusSheet?.getRange(targetRow, 2).setValue(roomStatus);
     }
   }
+}
+
+export function getWeekEvents(roomName: string): string[] {
+  let roomSheet =
+    SpreadsheetApp.getActiveSpreadsheet().getSheetByName(roomName);
+  let weekEvents = [];
+
+  if (roomSheet != null) {
+    let lastRow = roomSheet.getLastRow();
+    if (lastRow > 1) {
+      for (var nowRow = 2; nowRow < lastRow + 1; nowRow++) {
+        let title = roomSheet.getRange(nowRow, 3).getDisplayValue();
+        let description = roomSheet.getRange(nowRow, 4).getDisplayValue();
+        let startTime = roomSheet.getRange(nowRow, 1).getDisplayValue();
+        let endTime = roomSheet.getRange(nowRow, 2).getDisplayValue();
+
+        weekEvents.push(title, description, startTime, endTime);
+      }
+    }
+  }
+  console.log(weekEvents);
+  return weekEvents;
 }

@@ -29,7 +29,7 @@ export const AllRoom = ({
 }: AllRoomProps) => {
   return (
     <>
-      <h3>Today's Schedule</h3>
+      <h3>All Room</h3>
       <div className="cards">
         <RoomSummaryCard
           roomName="F601"

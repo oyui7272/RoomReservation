@@ -1,5 +1,6 @@
 import { TimeBlock } from "./TimeBlock";
 import { RoomSummaryCard } from "./RoomSummaryCard";
+import { RoomWeekEventDiv } from "./RoomWeekEventDiv";
 import { Event } from "./EventClass";
 import "./style/RoomDashboard.css";
 
@@ -9,6 +10,7 @@ type RoomDashboardProps = {
   updatedDateTime: string;
   roomStatus: string;
   roomTodayNextEvent: Event | null;
+  roomWeekEvents: Event[];
   reloadNextEvent: () => Promise<void>;
 };
 
@@ -18,11 +20,12 @@ export const RoomDashboard = ({
   updatedDateTime,
   roomStatus,
   roomTodayNextEvent,
+  roomWeekEvents,
   reloadNextEvent,
 }: RoomDashboardProps) => {
   return (
     <>
-      <h3>{roomName}Dashboard</h3>
+      <h3>{roomName} Dashboard</h3>
       <div className="room-dashboard">
         <div>
           <RoomSummaryCard
@@ -37,9 +40,8 @@ export const RoomDashboard = ({
             reloadNextEvent={reloadNextEvent}
           />
         </div>
-        <div className="roomWeekSchedule">
-          <h4>1週間の予約</h4>
-        </div>
+
+        <RoomWeekEventDiv roomWeekEvents={roomWeekEvents} />
       </div>
     </>
   );

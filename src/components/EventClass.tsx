@@ -4,8 +4,9 @@ import React from "react";
 export class Event {
   title: string = "";
   description: string = "";
-  startTime: Date | null = null;
-  endTime: Date | null = null;
+  startTime: Date;
+  endTime: Date;
+  eventStatus: string = "";
 
   constructor(
     title: string,
@@ -17,6 +18,10 @@ export class Event {
     this.description = description;
     this.startTime = startTime;
     this.endTime = endTime;
+  }
+
+  setEventStatus(eventStatus: string) {
+    this.eventStatus = eventStatus;
   }
 
   ToDisplayTime() {

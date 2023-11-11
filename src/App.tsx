@@ -28,6 +28,11 @@ function App() {
     null
   );
 
+  // 部屋の一週間の予定を表す変数
+  const [F601WeekEvents, setF601WeekEvents] = useState<Event[]>([]);
+  const [F602WeekEvents, setF602WeekEvents] = useState<Event[]>([]);
+  const [F612WeekEvents, setF612WeekEvents] = useState<Event[]>([]);
+
   // 現在の日時および更新日時の取得
   const [nowDateTime, setNowDateTime] = useState(new Date());
   const [updatedDateTime, setUpdatedDateTime] = useState(new Date());
@@ -160,6 +165,47 @@ function App() {
     }
   }
 
+  // 1週間の予定取得
+  async function getWeekEvents(roomName: string) {
+    let weekEvents: Event[] = [];
+    try {
+      let result = await serverFunctions.getWeekEvents(roomName);
+      let eMaxNum = result.length / 4;
+      for (let eNum = 0; eNum < eMaxNum; eNum++) {
+        let title = result[eNum * 4];
+        let description = result[eNum * 4 + 1];
+        let startTime = new Date(result[eNum * 4 + 2]);
+        let endTime = new Date(result[eNum * 4 + 3]);
+
+        let eventStatus = "使用不可";
+        if (description.includes("入室可能")) {
+          eventStatus = "使用中";
+        }
+
+        let addEvent = new Event(title, description, startTime, endTime);
+        addEvent.setEventStatus(eventStatus);
+
+        weekEvents.push(addEvent);
+      }
+      return weekEvents;
+    } catch (error) {
+      console.log(error);
+    }
+    return weekEvents;
+  }
+
+  // useStateに登録
+  async function setWeekEvents(roomName: string) {
+    let weekEvents = await getWeekEvents(roomName);
+    if (roomName === "F601") {
+      setF601WeekEvents(weekEvents);
+    } else if (roomName === "F602") {
+      setF602WeekEvents(weekEvents);
+    } else if (roomName === "F612") {
+      setF612WeekEvents(weekEvents);
+    }
+  }
+
   async function reloadNextEvent() {
     try {
       // 更新日時の設定
@@ -171,6 +217,11 @@ function App() {
       setTodayNextEvent("F601");
       setTodayNextEvent("F602");
       setTodayNextEvent("F612");
+
+      // 1週間の次の予定を取得し、UseStateに更新
+      setWeekEvents("F601");
+      setWeekEvents("F602");
+      setWeekEvents("F612");
     } catch (error) {
       console.error(error);
     }
@@ -213,6 +264,7 @@ function App() {
                   updatedDateTime={dateTimeToString(updatedDateTime)}
                   roomStatus={F601Status}
                   roomTodayNextEvent={F601TodayNextEvent}
+                  roomWeekEvents={F601WeekEvents}
                   reloadNextEvent={reloadNextEvent}
                 />
               }
@@ -226,6 +278,7 @@ function App() {
                   updatedDateTime={dateTimeToString(updatedDateTime)}
                   roomStatus={F602Status}
                   roomTodayNextEvent={F602TodayNextEvent}
+                  roomWeekEvents={F602WeekEvents}
                   reloadNextEvent={reloadNextEvent}
                 />
               }
@@ -239,6 +292,7 @@ function App() {
                   updatedDateTime={dateTimeToString(updatedDateTime)}
                   roomStatus={F612Status}
                   roomTodayNextEvent={F612TodayNextEvent}
+                  roomWeekEvents={F612WeekEvents}
                   reloadNextEvent={reloadNextEvent}
                 />
               }
