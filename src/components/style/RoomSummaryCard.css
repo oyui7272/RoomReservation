@@ -57,7 +57,7 @@
   align-items: center;
   background-color: #f3f5fa;
   margin: 15px;
-  padding: 10px;
+  padding: 10px 20px;
   border-radius: 10px;
 }
 .room-schedule-ptitle {
@@ -66,7 +66,7 @@
   display: block;
   text-align: center;
   position: relative;
-  margin: 10px 0 30px 0;
+  margin: 10px 0 0 0;
 }
 .room-schedule-ptitle::before {
   content: "";
@@ -85,22 +85,33 @@
 .room-status-unavailable .room-schedule-ptitle::before {
   background-color: #d85b40;
 }
-.room-schedule-event {
-  margin: 10px 0 40px 0;
+.room-schedule-detail {
+  margin: 40px 0 40px 0;
   display: flex;
   align-items: center;
-  min-height: 95px;
+  width: 100%;
+  height: 120px;
 }
-.room-schedule-event p {
+.room-schedule-detail div {
+  flex-grow: 1;
+}
+.room-schedule-detail .event-time {
   font-size: 25px;
   text-align: center;
 }
-.room-schedule-event span {
-  display: block;
-  font-size: 18px;
+.room-schedule-detail .event-title {
+  text-align: center;
+  margin-bottom: 20px;
 }
-.no-used-today span {
-  font-size: 18px;
+.room-schedule-detail .no-schedule {
+  text-align: center;
+}
+.room-schedule-detail i {
+  margin: 5px 10px 0 0;
+  width: 15px;
+}
+.room-schedule-detail .event-creator {
+  display: flex;
 }
 
 /* 部屋の詳細画面のCSS */

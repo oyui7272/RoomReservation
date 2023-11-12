@@ -34,7 +34,6 @@ export const RoomWeekEventDiv = ({ roomWeekEvents }: RoomWeekEventDivProp) => {
           </div>
           <div className="eventDescription">
             <p>{title}</p>
-            <p>{description}</p>
           </div>
         </div>
       );
@@ -47,7 +46,6 @@ export const RoomWeekEventDiv = ({ roomWeekEvents }: RoomWeekEventDivProp) => {
           </div>
           <div className="eventDescription">
             <p>{title}</p>
-            <p>{description}</p>
           </div>
         </div>
       );

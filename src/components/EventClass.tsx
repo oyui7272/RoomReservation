@@ -7,19 +7,22 @@ export class Event {
   startTime: Date;
   endTime: Date;
   eventStatus: string = "";
+  creator: string = "";
 
   constructor(
     title: string,
     description: string,
     startTime: Date,
     endTime: Date,
-    eventStatus: string
+    eventStatus: string,
+    creator: string
   ) {
     this.title = title;
     this.description = description;
     this.startTime = startTime;
     this.endTime = endTime;
     this.eventStatus = eventStatus;
+    this.creator = creator;
   }
 
   ToDisplayTime() {

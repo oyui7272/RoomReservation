@@ -42,7 +42,7 @@ export function writeWeekEvent(roomName: string) {
   let lastRow = roomSheet.getLastRow();
 
   // 内容を削除→更新
-  roomSheet.getRange(2, 1, lastRow, 4).clearContent();
+  roomSheet.getRange(2, 1, lastRow, 5).clearContent();
   weekEvents.forEach((event) => {
     let set_startTime = Utilities.formatDate(
       event.getStartTime(),
@@ -58,6 +58,7 @@ export function writeWeekEvent(roomName: string) {
     roomSheet?.getRange(targetRow, 2).setValue(set_endTime);
     roomSheet?.getRange(targetRow, 3).setValue(event.getTitle());
     roomSheet?.getRange(targetRow, 4).setValue(event.getDescription());
+    roomSheet?.getRange(targetRow, 5).setValue(event.getCreators()[0]);
     targetRow++;
   });
 }
@@ -96,11 +97,10 @@ export function getWeekEvents(roomName: string): string[] {
         let description = roomSheet.getRange(nowRow, 4).getDisplayValue();
         let startTime = roomSheet.getRange(nowRow, 1).getDisplayValue();
         let endTime = roomSheet.getRange(nowRow, 2).getDisplayValue();
-
-        weekEvents.push(title, description, startTime, endTime);
+        let creator = roomSheet.getRange(nowRow, 5).getDisplayValue();
+        weekEvents.push(title, description, startTime, endTime, creator);
       }
     }
   }
-  console.log(weekEvents);
   return weekEvents;
 }

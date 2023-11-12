@@ -27,7 +27,11 @@ export const RoomSummaryCard = ({
               使用不可<span>In Use Not available now</span>
             </p>
           </div>
-          <RoomNextEventDiv roomNextEvent={roomNextEvent} />
+          <RoomNextEventDiv
+            roomNextEvent={roomNextEvent}
+            roomNameDisplay={roomNameDisplay}
+            isUsingNow={true}
+          />
         </div>
       </>
     );
@@ -41,7 +45,11 @@ export const RoomSummaryCard = ({
               使用中<span>In Use but you can enter</span>
             </p>
           </div>
-          <RoomNextEventDiv roomNextEvent={roomNextEvent} />
+          <RoomNextEventDiv
+            roomNextEvent={roomNextEvent}
+            roomNameDisplay={roomNameDisplay}
+            isUsingNow={true}
+          />
         </div>
       </>
     );
@@ -55,7 +63,11 @@ export const RoomSummaryCard = ({
               使用可能<span>available</span>
             </p>
           </div>
-          <RoomNextEventDiv roomNextEvent={roomNextEvent} />
+          <RoomNextEventDiv
+            roomNextEvent={roomNextEvent}
+            roomNameDisplay={roomNameDisplay}
+            isUsingNow={false}
+          />
         </div>
       </>
     );

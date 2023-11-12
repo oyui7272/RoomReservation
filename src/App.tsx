@@ -138,12 +138,13 @@ function App() {
     let weekEvents: Event[] = [];
     try {
       let result = await serverFunctions.getWeekEvents(roomName);
-      let eMaxNum = result.length / 4;
+      let eMaxNum = result.length / 5;
       for (let eNum = 0; eNum < eMaxNum; eNum++) {
-        let title = result[eNum * 4];
-        let description = result[eNum * 4 + 1];
-        let startTime = new Date(result[eNum * 4 + 2]);
-        let endTime = new Date(result[eNum * 4 + 3]);
+        let title = result[eNum * 5];
+        let description = result[eNum * 5 + 1];
+        let startTime = new Date(result[eNum * 5 + 2]);
+        let endTime = new Date(result[eNum * 5 + 3]);
+        let creator = result[eNum * 5 + 4];
 
         let eventStatus = "使用不可";
         if (description.includes("入室可能")) {
@@ -155,7 +156,8 @@ function App() {
           description,
           startTime,
           endTime,
-          eventStatus
+          eventStatus,
+          creator
         );
 
         weekEvents.push(addEvent);
