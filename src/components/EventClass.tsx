@@ -12,15 +12,13 @@ export class Event {
     title: string,
     description: string,
     startTime: Date,
-    endTime: Date
+    endTime: Date,
+    eventStatus: string
   ) {
     this.title = title;
     this.description = description;
     this.startTime = startTime;
     this.endTime = endTime;
-  }
-
-  setEventStatus(eventStatus: string) {
     this.eventStatus = eventStatus;
   }
 

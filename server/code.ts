@@ -62,33 +62,6 @@ export function writeWeekEvent(roomName: string) {
   });
 }
 
-// 次の予約内容を返す関数
-export function getNextEvent(roomName: string): {
-  nextEvent_startTime: string;
-  nextEvent_endTime: string;
-  nextEvent_title: string;
-  nextEvent_description: string;
-} {
-  let roomSheet =
-    SpreadsheetApp.getActiveSpreadsheet().getSheetByName(roomName);
-  let nextEvent_startTime = "";
-  let nextEvent_endTime = "";
-  let nextEvent_title = "";
-  let nextEvent_description = "";
-  if (roomSheet != null) {
-    nextEvent_startTime = roomSheet.getRange(2, 1).getDisplayValue();
-    nextEvent_endTime = roomSheet.getRange(2, 2).getDisplayValue();
-    nextEvent_title = roomSheet.getRange(2, 3).getDisplayValue();
-    nextEvent_description = roomSheet.getRange(2, 4).getDisplayValue();
-  }
-  return {
-    nextEvent_startTime,
-    nextEvent_endTime,
-    nextEvent_title,
-    nextEvent_description,
-  };
-}
-
 export function writeRoomStatus(roomName: string, roomStatus: string) {
   let statusSheet =
     SpreadsheetApp.getActiveSpreadsheet().getSheetByName("現在の状態");

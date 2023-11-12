@@ -8,13 +8,13 @@
   padding: 0 15px 0 60px;
 }
 .side-bar p:not(#system-name) {
-  line-height: 95px;
+  line-height: 80px;
 }
 
 .side-bar .active-link {
   background-color: #828dcf;
   color: #fff;
-  height: 95px;
+  height: 80px;
   display: block;
   position: relative;
 }
@@ -29,7 +29,7 @@
 .side-bar .inactive-link {
   background-color: #fff;
   color: #414141;
-  height: 95px;
+  height: 80px;
   display: block;
 }
 

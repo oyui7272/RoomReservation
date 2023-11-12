@@ -58,39 +58,19 @@ function App() {
   }
 
   async function getNextEvent(roomName: string) {
-    try {
-      // 予定の取得
-      let {
-        nextEvent_startTime,
-        nextEvent_endTime,
-        nextEvent_title,
-        nextEvent_description,
-      } = await serverFunctions.getNextEvent(roomName);
-
-      let nextEvent: Event;
-      let result: Event | null;
-
-      // 予定があるかどうかを確認
-      // ・予定がない場合 → nullを返す
-      // ・予定がある場合 → 次の予定の情報を含むEventインスタンスを返す
-      if (nextEvent_startTime !== "" && nextEvent_endTime !== "") {
-        let startTime_date = new Date(nextEvent_startTime);
-        let endTime_date = new Date(nextEvent_endTime);
-        nextEvent = new Event(
-          nextEvent_title,
-          nextEvent_description,
-          startTime_date,
-          endTime_date
-        );
-        result = nextEvent;
-      } else {
-        result = null;
-      }
-      return result;
-    } catch (error) {
-      console.error(error);
+    let nextEvent: Event | null = null;
+    // 部屋の一週間の予定を読み込み、次の予定を返す
+    // リストが空だったときはnullとする
+    if (roomName === "F601") {
+      nextEvent = F601WeekEvents[0] || null;
+    } else if (roomName === "F602") {
+      nextEvent = F602WeekEvents[0] || null;
+    } else if (roomName === "F612") {
+      nextEvent = F612WeekEvents[0] || null;
     }
+    return nextEvent;
   }
+
   // 部屋の状態取得
   function getRoomStatus(roomName: string) {
     let nextEvent: Event | null = null;
@@ -105,16 +85,10 @@ function App() {
     let roomStatus = "空室";
     // 状態を判断
     if (nextEvent !== null) {
-      if (nextEvent.startTime !== null && nextEvent.endTime !== null) {
-        let diff1_ms =
-          updatedDateTime.getTime() - nextEvent.startTime.getTime();
-        let diff2_ms = nextEvent.endTime.getTime() - updatedDateTime.getTime();
-        if (diff1_ms > 0 && diff2_ms > 0) {
-          roomStatus = "使用不可";
-          if (nextEvent.description.includes("入室可能")) {
-            roomStatus = "使用中";
-          }
-        }
+      let diff1_ms = updatedDateTime.getTime() - nextEvent.startTime.getTime();
+      let diff2_ms = nextEvent.endTime.getTime() - updatedDateTime.getTime();
+      if (diff1_ms > 0 && diff2_ms > 0) {
+        roomStatus = nextEvent.eventStatus;
       }
     }
     return roomStatus;
@@ -126,28 +100,22 @@ function App() {
       setF601Status(roomStatus);
     } else if (roomName === "F602") {
       setF602Status(roomStatus);
-    } else {
+    } else if (roomName === "F612") {
       setF612Status(roomStatus);
     }
-    await serverFunctions.writeRoomStatus(roomName, roomStatus);
+    serverFunctions.writeRoomStatus(roomName, roomStatus);
   }
 
   // 部屋の今日の次の予定取得
   async function getTodayNextEvent(roomName: string) {
-    let result: Event | null | undefined;
+    let nextEvent: Event | null;
     let todayNextEvent: Event | null = null;
 
-    result = await getNextEvent(roomName);
-    if (result === null || result === undefined) {
-      todayNextEvent = null;
-    } else {
-      if (result !== null) {
-        // 開始日時が今日の場合
-        if (nowDateTime.getDate() === result?.startTime?.getDate()) {
-          todayNextEvent = result;
-        } else {
-          todayNextEvent = null;
-        }
+    nextEvent = await getNextEvent(roomName);
+    if (nextEvent !== null) {
+      // 開始日時が今日の場合
+      if (nowDateTime.getDate() === nextEvent.startTime.getDate()) {
+        todayNextEvent = nextEvent;
       }
     }
     return todayNextEvent;
@@ -182,8 +150,13 @@ function App() {
           eventStatus = "使用中";
         }
 
-        let addEvent = new Event(title, description, startTime, endTime);
-        addEvent.setEventStatus(eventStatus);
+        let addEvent = new Event(
+          title,
+          description,
+          startTime,
+          endTime,
+          eventStatus
+        );
 
         weekEvents.push(addEvent);
       }
@@ -213,11 +186,6 @@ function App() {
       setUpdatedDateTime(updated_d);
       // 1週間の予定をスプレッドシートに書き込み
       await writeWeekEvent();
-      // 本日の次の予定を取得し、UseStateに更新
-      setTodayNextEvent("F601");
-      setTodayNextEvent("F602");
-      setTodayNextEvent("F612");
-
       // 1週間の次の予定を取得し、UseStateに更新
       setWeekEvents("F601");
       setWeekEvents("F602");
@@ -248,6 +216,17 @@ function App() {
   useEffect(() => {
     setRoomStatus("F612");
   }, [F612TodayNextEvent]);
+
+  // F601 / F602 / F612の1週間の予定が変更されたら > 次の部屋の予定を更新
+  useEffect(() => {
+    setTodayNextEvent("F601");
+  }, [F601WeekEvents]);
+  useEffect(() => {
+    setTodayNextEvent("F602");
+  }, [F602WeekEvents]);
+  useEffect(() => {
+    setTodayNextEvent("F612");
+  }, [F612WeekEvents]);
 
   return (
     <>

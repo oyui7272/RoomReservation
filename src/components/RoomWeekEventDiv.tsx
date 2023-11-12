@@ -66,7 +66,7 @@ export const RoomWeekEventDiv = ({ roomWeekEvents }: RoomWeekEventDivProp) => {
     <>
       <div className="roomWeekSchedule">
         <h4>1週間の予約</h4>
-        {items}
+        <div className="eventElement-sum">{items}</div>
       </div>
     </>
   );
