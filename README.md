@@ -16,8 +16,6 @@
 - 取得した予約内容を Google Spreadsheet に書き込み
 - Google Spreadsheet から 1 週間の予約を取得
 
-## Expanding the ESLint configuration
-
 ### 2. 今日の次の予約や現在の使用状況の取得
 
 - 今日の次の予定：次の予約が今日の日付であれば、今日の次の予定として表示
