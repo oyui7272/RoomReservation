@@ -34,13 +34,13 @@ export const RoomNextEventDiv = ({
             <p className="event-time">{roomNextEvent.ToDisplayTime()}</p>
             <p className="event-title">{roomNextEvent.title}</p>
 
-            {roomNextEvent.creator && (
+            {roomNextEvent.creator !== "" && (
               <div className="event-creator">
                 <i className="fa-solid fa-user"></i>
                 <p>{roomNextEvent.creator}</p>
               </div>
             )}
-            {!roomNameDisplay && roomNextEvent.creator && (
+            {!roomNameDisplay && roomNextEvent.description !== "" && (
               <div className="event-creator">
                 <i className="fa-solid fa-align-left"></i>
                 <p>{roomNextEvent.description}</p>

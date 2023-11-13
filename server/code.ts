@@ -1,10 +1,17 @@
+/**
+ * ページを開いた時に最初に呼ばれるルートメソッド
+ */
 export function doGet() {
   return HtmlService.createHtmlOutputFromFile("hosting/index.html")
     .addMetaTag("viewport", "width=device-width, initial-scale=1")
     .setTitle("自由部屋 予約システム");
 }
 
-// 1週間の予約内容を確認する関数
+/**
+ * 部屋のカレンダーから1週間の予約内容を取得し、Google Spreadsheetに書き込む関数
+ * ・引数   roomName: 部屋の名前（F601, F602, F612のいずれか)
+ * ・戻り値 なし
+ */
 export function writeWeekEvent(roomName: string) {
   let roomCalendarID = "";
   if (roomName === "F601") {
@@ -22,14 +29,15 @@ export function writeWeekEvent(roomName: string) {
   let roomCalendar = CalendarApp.getCalendarById(roomCalendarID);
 
   // startDate: 今の日時  endDate: 1週間後の日時
-  // todayEvents: startDate ~ endDateの間の全ての予約状況
   let startDate = new Date();
   let endDate = new Date();
   endDate.setDate(startDate.getDate() + 7);
   endDate.setHours(23, 59, 59);
 
-  // 1週間の予定を取得して、SpreadSheetに書き込む
+  // Google Calendarより1週間の予定を取得
   let weekEvents = roomCalendar.getEvents(startDate, endDate);
+
+  // Google Spreadsheetの内容を削除
   let roomSheet =
     SpreadsheetApp.getActiveSpreadsheet().getSheetByName(roomName);
   if (roomSheet === null) {
@@ -37,12 +45,12 @@ export function writeWeekEvent(roomName: string) {
     roomSheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
     roomSheet.setName(roomName);
   }
-
   let targetRow = 2;
   let lastRow = roomSheet.getLastRow();
 
-  // 内容を削除→更新
   roomSheet.getRange(2, 1, lastRow, 5).clearContent();
+
+  // 取得した情報をGoogle Spreadsheetに書き込み
   weekEvents.forEach((event) => {
     let set_startTime = Utilities.formatDate(
       event.getStartTime(),
@@ -63,6 +71,13 @@ export function writeWeekEvent(roomName: string) {
   });
 }
 
+/**
+ * 部屋の状態をGoogle Spreadsheetに書き込む関数
+ * ・引数
+ * roomName   : 部屋の名前（F601, F602, F612のいずれか),
+ * roomStatus : 部屋の使用状況(使用可能, 使用中, 使用不可のいずれか)
+ * ・戻り値 なし
+ */
 export function writeRoomStatus(roomName: string, roomStatus: string) {
   let statusSheet =
     SpreadsheetApp.getActiveSpreadsheet().getSheetByName("現在の状態");
@@ -84,6 +99,12 @@ export function writeRoomStatus(roomName: string, roomStatus: string) {
   }
 }
 
+/**
+ * Google Spreadsheetから部屋の1週間の予定を取得する関数
+ * ・引数   roomName   : 部屋の名前（F601, F602, F612のいずれか)
+ * ・戻り値
+ * 1つのイベントにつき[予約タイトル, 予約説明文, 開始時間, 終了時間, イベント作成者]が順に入ったリスト
+ */
 export function getWeekEvents(roomName: string): string[] {
   let roomSheet =
     SpreadsheetApp.getActiveSpreadsheet().getSheetByName(roomName);

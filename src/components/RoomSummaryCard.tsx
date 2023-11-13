@@ -10,7 +10,6 @@ type RoomSummaryCardProp = {
   roomNameDisplay: boolean;
 };
 
-// 部屋の使用状況のCard型のHTMLコードを返すコンポーネント
 export const RoomSummaryCard = ({
   roomName,
   roomStatus,

@@ -19,7 +19,6 @@ export const RoomWeekEventDiv = ({ roomWeekEvents }: RoomWeekEventDivProp) => {
   for (let eNum = 0; eNum < roomWeekEvents.length; eNum++) {
     let addEvent = roomWeekEvents[eNum];
     let title = addEvent.title;
-    let description = addEvent.description;
     let startTime = addEvent.startTime;
     let endTime = addEvent.endTime;
     let eventStatus = addEvent.eventStatus;
